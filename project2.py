@@ -24,22 +24,25 @@ imgurSecret = "secret"
 
 
 def imgurUpload():
-    with open("test.jpg", "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
+    try:
+        with open("test.jpg", "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
 
-        url = "https://api.imgur.com/3/image"
+            url = "https://api.imgur.com/3/image"
 
-        payload={'image': encoded_string}
-        files=[
+            payload={'image': encoded_string}
+            files=[
 
-        ]
-        headers = {'Authorization': 'Client-ID ' + imgurID}
+            ]
+            headers = {'Authorization': 'Client-ID ' + imgurID}
 
-        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+            response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
-        response_data = json.loads(response.text)
-        image_link = response_data['data']['link']
-        return image_link
+            response_data = json.loads(response.text)
+            image_link = response_data['data']['link']
+            return image_link
+    except:
+        return "https://i.imgur.com/J6jGgVV.jpg"
 
 
 def send_mms():
